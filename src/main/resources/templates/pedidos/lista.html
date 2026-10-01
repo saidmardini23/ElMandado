@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/comunes :: cabeza('ElMandado - Lista de Pedidos')}"></head>
+<body>
+
+<div class="container">
+    <div th:replace="~{fragmentos/comunes :: menu('lista')}"></div>
+
+    <h2>Listado General de Pedidos</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Plato</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${pedidos}">
+                <td th:text="${p.id}">1</td>
+                <td th:text="${p.cliente}">Carlos</td>
+                <td th:text="${p.plato}">Pizza Pepperoni</td>
+                <td th:text="${'$' + #numbers.formatDecimal(p.precio, 1, 2)}">$12.50</td>
+                <td>
+                    <span th:if="${p.entregado}" class="badge badge-success">✓ Entregado</span>
+                    <span th:unless="${p.entregado}" class="badge badge-warning">Pendiente</span>
+                </td>
+                <td>
+                    <a th:href="@{/pedidos/{id}(id=${p.id})}" class="btn btn-info">Ver Detalle</a>
+                    <a th:unless="${p.entregado}" 
+                       th:href="@{/pedidos/{id}/entregar(id=${p.id})}" 
+                       class="btn btn-primary">Entregar</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(pedidos)}">
+                <td colspan="6" style="text-align: center; color: #6c757d;">No hay pedidos registrados en el sistema.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:replace="~{fragmentos/comunes :: pie}"></div>
+</div>
+
+</body>
+</html>

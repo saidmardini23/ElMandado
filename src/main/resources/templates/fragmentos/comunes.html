@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Fragmento para <head> con título parametrizado y enlace al CSS estático -->
+<head th:fragment="cabeza(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}">ElMandado</title>
+    <!-- Enlace al CSS en static/css/estilos.css usando la sintaxis @{...} -->
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+
+<body>
+
+  <!-- Fragmento de navegación con marcado de pestaña activa mediante th:classappend -->
+  <header th:fragment="menu(activo)">
+    <h1>🛒 ElMandado - Gestión de Pedidos</h1>
+    <nav>
+      <a th:href="@{/pedidos}" th:classappend="${activo == 'lista'} ? 'activo'">Ver Pedidos</a>
+      <a th:href="@{/pedidos/nuevo}" th:classappend="${activo == 'nuevo'} ? 'activo'">Nuevo Pedido</a>
+    </nav>
+  </header>
+
+  <!-- Fragmento de pie de página -->
+  <footer th:fragment="pie">
+    <p>ElMandado &copy; 2026 - Módulo Web con Thymeleaf y Spring Boot</p>
+  </footer>
+
+</body>
+</html>
